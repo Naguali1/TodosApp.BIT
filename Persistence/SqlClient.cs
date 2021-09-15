@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dapper;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -25,6 +27,12 @@ namespace Persistence
             using var connection = new MySqlConnection(_connectionString);
 
             return connection.QueryAsync<T>(sql, param);
+        }
+        public Task<T> QuerySingleOrDefaultAsync<T>(string sql, object param = null)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+
+            return connection.QuerySingleOrDefaultAsync<T>(sql, param);
         }
     }
 }
